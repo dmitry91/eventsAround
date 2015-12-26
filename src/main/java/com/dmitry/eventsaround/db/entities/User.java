@@ -1,6 +1,5 @@
 package com.dmitry.eventsaround.db.entities;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Date;
@@ -36,6 +35,7 @@ public class User {
     private Date birthday;
     /**
      * user login for authorization on the network
+     * as login using user email
      */
     @Column
     private String login;
@@ -58,7 +58,7 @@ public class User {
     /**
      * image user photo
      */
-    @Column
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte []avatar;
     /**
      * message this send user
