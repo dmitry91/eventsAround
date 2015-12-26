@@ -2,6 +2,7 @@ package com.dmitry.eventsaround.db.entities;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by Дмитрий
@@ -23,13 +24,15 @@ public class Message {
     private String theme;
     /**
      * Message text
+     * set type 'TEXT' because varchar can store up to 255 characters
+     * in the text can store up to 65,535
      */
-    @Column
+    @Column(columnDefinition="TEXT")
     private String text;
     /**
      * picture is attached to a message
      */
-    @Column
+    @Column(columnDefinition = "MEDIUMBLOB")
     private byte []image;
     /**
      * user who send a message
@@ -37,6 +40,10 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
     private User user;
+    /**
+     * the date when the message was sent
+     */
+    Date sendDate;
 
     /**
      * empty constructor
@@ -51,11 +58,12 @@ public class Message {
      * @param image -picture for send message
      * @param user - user who send message
      */
-    public Message(String theme, String text, byte[] image, User user) {
+    public Message(String theme, String text, byte[] image, User user,Date date) {
         this.theme = theme;
         this.text = text;
         this.image = image;
         this.user = user;
+        this.sendDate = date;
     }
 
     /**
@@ -66,12 +74,13 @@ public class Message {
      * @param image -picture for send message
      * @param user - user who send message
      */
-    public Message(long id, String theme, String text, byte[] image, User user) {
+    public Message(long id, String theme, String text, byte[] image, User user,Date date) {
         this.id = id;
         this.theme = theme;
         this.text = text;
         this.image = image;
         this.user = user;
+        this.sendDate = date;
     }
 
     /**
@@ -151,6 +160,22 @@ public class Message {
      */
     public void setUser(User user) {
         this.user = user;
+    }
+
+    /**
+     * get transmission date
+     * @return Date
+     */
+    public Date getSendDate() {
+        return sendDate;
+    }
+
+    /**
+     * set transmission date
+     * @param sendDate Date
+     */
+    public void setSendDate(Date sendDate) {
+        this.sendDate = sendDate;
     }
 
     /**
