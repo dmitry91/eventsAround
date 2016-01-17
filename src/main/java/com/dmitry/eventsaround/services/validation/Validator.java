@@ -2,6 +2,7 @@ package com.dmitry.eventsaround.services.validation;
 
 import com.dmitry.eventsaround.db.entities.Message;
 import com.dmitry.eventsaround.db.entities.User;
+import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import java.util.regex.Pattern;
  * if the object has passed validation, do not do anything,
  * if not then generate ValidationException
  */
+@Service
 public class Validator {
 
     /**
@@ -84,7 +86,7 @@ public class Validator {
      * @return boolean result
      */
     private boolean validAboutUser(String s) {
-        String dataPattern = "[A-ZА-Яa-zа-я0-9]{2,80}";
+        String dataPattern = "[(A-ZА-Яa-zа-я0-9)+(\\s)]{2,80}";
         Pattern patternName = Pattern.compile(dataPattern);
         Matcher matcherName = patternName.matcher(s);
         return matcherName.matches();
