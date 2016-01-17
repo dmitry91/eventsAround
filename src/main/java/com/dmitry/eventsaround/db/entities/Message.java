@@ -37,7 +37,7 @@ public class Message {
     /**
      * user who send a message
      */
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
     /**
@@ -195,6 +195,7 @@ public class Message {
         if (text != null ? !text.equals(message.text) : message.text != null) return false;
         if (theme != null ? !theme.equals(message.theme) : message.theme != null) return false;
         if (user != null ? !user.equals(message.user) : message.user != null) return false;
+        if (sendDate != null ? !sendDate.equals(message.sendDate) : message.sendDate != null) return false;
 
         return true;
     }
@@ -210,6 +211,7 @@ public class Message {
         result = 31 * result + (text != null ? text.hashCode() : 0);
         result = 31 * result + (image != null ? Arrays.hashCode(image) : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (sendDate != null ? sendDate.hashCode() : 0);
         return result;
     }
 
@@ -220,7 +222,8 @@ public class Message {
                 ", theme='" + theme + '\'' +
                 ", text='" + text + '\'' +
                 ", image=" + Arrays.toString(image) +
-                ", user=" + user +
+                ", date=" + sendDate +
+                ", sendDate=" + user +
                 '}';
     }
 }
