@@ -1,5 +1,6 @@
 package com.dmitry.eventsaround.db.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.*;
 import java.util.Set;
 
@@ -23,8 +24,10 @@ public class Role {
     /**
      * create Set "user_role"
      * where we will store the user's communication with roles
+     * JsonManagedReference is used to annotate the inverse side while.
      */
-    @OneToMany(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
+    @JsonManagedReference
     private Set<User> userRoles;
 
     /**

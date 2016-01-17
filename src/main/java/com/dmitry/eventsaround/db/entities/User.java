@@ -1,5 +1,7 @@
 package com.dmitry.eventsaround.db.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Date;
@@ -52,8 +54,10 @@ public class User {
     private String aboutUser;
     /**
      * role user in network
+     * JsonBackReference maps the owning side of the relationship.
      */
-    @OneToOne(fetch = FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
     private Role role;
     /**
      * image user photo
@@ -63,13 +67,13 @@ public class User {
     /**
      * message this send user
      */
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Message> message;
     /**
      * (подписчики)
      *  who signed this user
      */
-    @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<User> followers;
 
     /**
@@ -309,21 +313,15 @@ public class User {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
         if (id != user.id) return false;
         if (aboutUser != null ? !aboutUser.equals(user.aboutUser) : user.aboutUser != null) return false;
         if (!Arrays.equals(avatar, user.avatar)) return false;
         if (birthday != null ? !birthday.equals(user.birthday) : user.birthday != null) return false;
-        if (followers != null ? !followers.equals(user.followers) : user.followers != null) return false;
-        if (login != null ? !login.equals(user.login) : user.login != null) return false;
-        if (message != null ? !message.equals(user.message) : user.message != null) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
-
         return true;
     }
 
@@ -340,10 +338,7 @@ public class User {
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (aboutUser != null ? aboutUser.hashCode() : 0);
-        result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (avatar != null ? Arrays.hashCode(avatar) : 0);
-        result = 31 * result + (message != null ? message.hashCode() : 0);
-        result = 31 * result + (followers != null ? followers.hashCode() : 0);
         return result;
     }
 
@@ -357,7 +352,6 @@ public class User {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", aboutUser='" + aboutUser + '\'' +
-                ", avatar=" + Arrays.toString(avatar) +
                 '}';
     }
 }
