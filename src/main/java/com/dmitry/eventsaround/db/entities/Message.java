@@ -9,7 +9,7 @@ import java.util.Date;
  * Messages sent by users
  */
 @Entity
-public class Message {
+public class Message implements Comparable<Message> {
 
     /**
      * id message in database
@@ -176,6 +176,12 @@ public class Message {
      */
     public void setSendDate(Date sendDate) {
         this.sendDate = sendDate;
+    }
+    @Override
+    public int compareTo(Message m) {
+        if(this.sendDate.getTime() > m.sendDate.getTime()) return 1;
+        if(this.sendDate.getTime() < m.sendDate.getTime()) return -1;
+        return 0;
     }
 
     /**
