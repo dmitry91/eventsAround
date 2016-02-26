@@ -1,0 +1,62 @@
+
+div.page_settings_layout
+{
+    position: relative;
+    height: 750px;
+    width: 800px;
+    margin: 10px auto 40px;
+    overflow-y:scroll ;
+}
+/*for button go tu main page*/
+div.toMainPage
+{
+    margin-top: 10px;
+    margin-left: 15px;
+}
+/*button to go to the home page*/
+a.button_to_main
+{
+    color: #fff;
+    text-decoration: none;
+    user-select: none;
+    background: rgb(73, 154, 69);
+    padding: .3em 0.5em;
+    outline: none;
+}
+a.button_to_main:hover { background: rgb(80, 184, 76); }
+a.button_to_main:active { background: rgb(34, 105, 32); }
+
+/*field description*/
+p.text_field
+{
+    margin-top: 8px;
+    margin-bottom: 2px;
+}
+/*button save form*/
+div.button_save
+{
+    margin-top:10px;
+    margin-bottom: 10px;
+}
+/* form for changes*/
+div.form
+{
+    margin-top: 8px;
+    border: groove rgba(248, 248, 255, 0.33);
+    padding: 5px;
+}
+/*button submit*/
+input.button
+{
+    background: gainsboro;
+}
+
+div.message{
+    width: 700px;
+    height:20px;
+    color: #469327;
+    margin-bottom: 10px;
+    margin-left:500px;
+    font-size: 25px;
+}
+

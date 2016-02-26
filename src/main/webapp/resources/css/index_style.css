@@ -1,0 +1,189 @@
+/*the main block */
+div.main
+{
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+    margin-top: -8px;
+}
+/*for out user photo*/
+div.user_photo
+{
+    width: 210px;
+    height: 210px;
+    margin-top: 15px;
+    margin-left: 200px;
+}
+img.user_avatar{
+    max-height: 210px;
+    min-height: 50px;
+    max-width: 210px;
+    min-width: 50px;
+    width:auto;
+    border-style: ridge;
+}
+/*General information about the user*/
+div.user_info
+{
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    margin-top: -200px;
+    margin-left: 500px;
+}
+/*user name and surname*/
+div.user_name_surname
+{
+    font-size: 20px;
+}
+/*information about user*/
+div.about_user
+{
+    margin-top: 15px;
+    margin-left: 5px;
+    width: 200px;
+    height: 200px;
+    font-size: 15px;
+}
+/*unit which will display information about subscriptions, subscribers, reports, news and more*/
+div.output_element
+{
+    width: 85%;
+    height: 58%;
+    margin-top: 20px ;
+    margin-left: 10px ;
+    border: ridge #50b84c;
+    overflow: auto;
+    padding: 10px;
+}
+/*Footer applications*/
+div.footer
+{
+    text-align: center;
+    position: absolute;
+    font-size: 14px;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+}
+/*unit for the location of all the major elements*/
+div.page_layout
+{
+    position: relative;
+    height: 800px;
+    width: 800px;
+    margin: auto;
+}
+/*block button*/
+div.side_bar
+{
+    margin-top: 5px;
+    position: absolute;
+    left: 0;
+    width: 134px;
+    height: 40px;
+}
+/*block button element 'lo'*/
+div.side_bar ol
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+/*button itself*/
+a.button {
+    text-decoration: none;
+    display: inline-block;
+    width: 150px;
+    height: 20px;
+    color: rgba(255,255,255,1.8);
+    cursor:pointer;
+    border-radius: 8px;
+    -webkit-user-select: none;
+    margin-left: 10px;
+    margin-top: 5px;
+    padding: 5px;
+    background: #50b84c linear-gradient(#166414, #50b84c);
+    border-left: 2px solid rgb(150,150,150);
+    border-right: 2px solid rgb(150,150,150);
+    border-bottom: 2px solid rgb(230,230,230);
+}
+/*pressed button*/
+a.button:active {
+    margin-left: 10px;
+    margin-top: 5px;
+    padding: 5px;
+    border-left: 2px solid rgb(150,150,150);
+    border-right: 2px solid rgb(150,150,150);
+    border-bottom: 2px solid rgb(230,230,230);
+    background: rgb(0, 79, 0) ;
+    box-shadow: none;
+    -webkit-transform: translate(1px, -1px);
+    transform: translate(1px, -1px);
+}
+/*page heading*/
+div.menu_header
+{
+    position: relative;
+    background: green;
+    height: 40px;
+    width: 800px;
+    margin: auto;
+    border-radius: 11px;
+}
+/*button exit*/
+div.menu_header a.exit
+{
+    background: #166414;
+    color: #fff;
+    padding: 10px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 5px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+/*hover exit button*/
+div.menu_header a.exit:hover {
+    color: #fff;
+    background-color: #004f00;
+}
+/*settings button*/
+div.menu_header img.wheel:hover {
+    color: #fff;
+    background-color: #004f00;
+}
+/*for button exit on right*/
+div.menu_header .right {
+    position: absolute;
+    right: 0;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+/*logo picture on the left*/
+div.menu_header .left {
+    position: absolute;
+    left: 0;
+    width: 134px;
+    height: 40px;
+    background: yellow;
+    border-bottom-left-radius: 11px;
+    border-top-left-radius: 11px;
+}
+div.menu_header  img.events_around{
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/*image settings button*/
+div.menu_header .settings{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    right: 70px;
+    background-color: #166414;
+}
+div.menu_header  img.wheel{
+    width: 100%;
+}
