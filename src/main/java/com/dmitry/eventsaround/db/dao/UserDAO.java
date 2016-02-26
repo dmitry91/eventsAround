@@ -84,4 +84,11 @@ public interface UserDAO extends JpaRepository<User,Long> {
     @Query("select u from User u where u.aboutUser like %?1%")
     List<User> getByAboutUser(String about);
 
+    /**
+     * fin user by login (email)
+     * @param login user email
+     * @return User
+     */
+    User findByLogin(String login);
+
 }
