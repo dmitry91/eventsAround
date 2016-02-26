@@ -1,7 +1,10 @@
 package com.dmitry.eventsaround.services.validation;
 
+import com.dmitry.eventsaround.db.dao.UserDAO;
 import com.dmitry.eventsaround.db.entities.Message;
 import com.dmitry.eventsaround.db.entities.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
@@ -18,6 +21,10 @@ import java.util.regex.Pattern;
 @Service
 public class Validator {
 
+    @Qualifier("userDAO")
+    @Autowired
+    UserDAO userDAO;
+
     /**
      * if the object has passed validation, do not do anything,
      * if not then generate ValidationException.
@@ -30,7 +37,7 @@ public class Validator {
      * The user should not be older than 120 years,
      * and not younger than 10 years.
      * @param user object User
-     * @throws ValidationException
+     * @throws javax.xml.bind.ValidationException
      */
     public void validUser(User user) throws ValidationException {
         if(!validUserNameSurname(user.getName()))
@@ -51,7 +58,7 @@ public class Validator {
      * theme of the message must contain at least 2 characters maximum 80
      * text messages while at least 2 characters maximum of 140
      * @param message object Message
-     * @throws ValidationException
+     * @throws javax.xml.bind.ValidationException
      */
     public void validMessage(Message message) throws ValidationException{
         if(message.getTheme().length()<2)
@@ -71,7 +78,7 @@ public class Validator {
      * @param name user name or surname
      * @return boolean result
      */
-    private boolean validUserNameSurname(String name){
+    public boolean validUserNameSurname(String name){
         String namePattern = "[A-ZА-Яa-zа-я]{2,20}";
         Pattern patternName = Pattern.compile(namePattern);
         Matcher matcherName = patternName.matcher(name);
@@ -81,12 +88,13 @@ public class Validator {
     /**
      * check personal data for validity
      * user text date is of Latin or Cyrillic letters,
+     * hyphen, plus, period, comma, space, exclamation mark, colon, like question marks, parentheses
      * at least 2 maximum of 20 characters
      * @param s date about user
      * @return boolean result
      */
-    private boolean validAboutUser(String s) {
-        String dataPattern = "[(A-ZА-Яa-zа-я0-9)+(\\s)]{2,80}";
+    public boolean validAboutUser(String s) {
+        String dataPattern = "[(A-ZА-Яa-zа-я0-9\\-_!,.:+=?)+(\\s\\w\\d)]{2,80}";
         Pattern patternName = Pattern.compile(dataPattern);
         Matcher matcherName = patternName.matcher(s);
         return matcherName.matches();
@@ -94,15 +102,19 @@ public class Validator {
 
     /**
      * check the validity of an email
+     * If the login is not available to existing user returns false
      * @param s user email
      * @return boolean result
      */
-    private boolean validUserEmail(String s){
+    public boolean validUserEmail(String s){
         String emailPattern = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
         Pattern patternName = Pattern.compile(emailPattern);
         Matcher matcherName = patternName.matcher(s);
-        return matcherName.matches();
+        if (matcherName.matches()){
+            return userDAO.findByLogin(s) == null;
+        }
+        else return false;
     }
 
     /**
@@ -112,7 +124,7 @@ public class Validator {
      * @param s user password
      * @return boolean result
      */
-    private boolean validUserPassword(String s){
+    public boolean validUserPassword(String s){
         String passwordPattern = "(?=.*\\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я]).{6,20}";
         Pattern patternName = Pattern.compile(passwordPattern);
         Matcher matcherName = patternName.matcher(s);
@@ -126,7 +138,7 @@ public class Validator {
      * @param birthday user birthday date
      * @return boolean result
      */
-    private boolean validUserBirthday(Date birthday){
+    public boolean validUserBirthday(Date birthday){
         //min user age
         Date minAge;
         //max user age
