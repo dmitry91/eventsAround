@@ -25,6 +25,10 @@
                          name="fff" type="checkbox" value="false">Показать
               </label>
           </p>
+          <p>
+              <label for="j_remember" class="text_field">Remember Me</label>
+              <input id="j_remember" name="_spring_security_remember_me" type="checkbox" />
+          </p>
           <div>
             <input class="submit" type="submit" value="Войти"  >
       </div>

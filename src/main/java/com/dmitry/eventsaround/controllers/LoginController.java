@@ -50,10 +50,14 @@ public class LoginController {
     @Autowired
     UserDAO userDAO;
 
-
+    /**
+     * If the user is logged in, then the index page is displayed.
+     * If not logged in, access the index is not available, and Spring makes a redirect to the login page
+     * @return index page
+     */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
-        return "pages/login";
+        return "redirect:/index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

@@ -21,6 +21,9 @@
                     password-parameter="password"
                     authentication-failure-url="/loginfailed" />
         <logout logout-success-url="/logout" />
+        <!--token-validity-seconds – The expire date of “remember-me” cookie, in seconds.
+        For example, 1209600 = 2 weeks (14 days), 86400 = 1 day, 18000 = 5 hours.-->
+        <remember-me key="myAppKey" token-validity-seconds="1209600" />
     </http>
 
     <authentication-manager>
