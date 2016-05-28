@@ -3,7 +3,7 @@
 
     $(document).ready(function () {
         //signing event on my subscription button
-        var subscriptionButton= document.getElementById("subscriptionButton");
+        var subscriptionButton = document.getElementById("subscriptionButton");
         subscriptionButton.onclick = findSubscription;
         //signing event on my followers button
         var followersButton= document.getElementById("followersButton");
@@ -17,6 +17,22 @@
         //button find users
         var findUsers = document.getElementById("findUsers");
         findUsers.onclick = findAllUsers;
+
+        //set events for dropdown menu
+        var subscriptionButtonDropdown = document.getElementById("subscriptionButton-dropdown");
+        subscriptionButtonDropdown.onclick = findSubscription;
+        //signing event on my followers button
+        var followersButtonDropdown= document.getElementById("followersButton-dropdown");
+        followersButtonDropdown.onclick = findFollowers;
+        //signing my message button
+        var messagesButtonDropdown= document.getElementById("messagesButton-dropdown");
+        messagesButtonDropdown.onclick = findMessages;
+        //signing news button
+        var newsButtonDropdown =document.getElementById("newsButton-dropdown");
+        newsButtonDropdown.onclick = showMessageSubscriber;
+        //button find users
+        var findUsersDropdown = document.getElementById("findUsers-dropdown");
+        findUsersDropdown.onclick = findAllUsers;
         //show news on the start page
         showMessageSubscriber();
     });

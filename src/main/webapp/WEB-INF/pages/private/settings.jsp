@@ -9,22 +9,55 @@
     <script src="<c:url value="/resources/js/settings_script.js"/>"></script>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/index_style.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/settings_style.css"/>">
+    <script src="<c:url value="/resources/bootstrap3/js/bootstrap.js"/>"></script>
+    <!-- Bootstrap -->
+    <link href="<c:url value="/resources/bootstrap3/css/bootstrap.css"/>" type="text/css" rel="stylesheet">
+    <link href="<c:url value="/resources/css/bootstrap_style.css"/>" type="text/css" rel="stylesheet">
 </head>
 <body>
-    <!--main element-->
-    <div class="main">
-        <!--page header-->
-        <div class="menu_header">
-            <div class="left"><img class="events_around" src="<c:url value="/resources/image/events_around.jpg"/>"></div>
-            <div class="settings"><a href="#"><img class="wheel" src="<c:url value="/resources/image/settings_wheel.png"/>" alt="" /></a></div>
-            <div class="right"><a class="exit" href="<c:url value="/j_spring_security_logout" />">Выход</a></div>
+<%--header--%>
+    <div class="container navbar navbar-inverse ">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="<c:url value="/index"/>" >Events Around</a>
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#responsive-menu">
+                <span class="sr-only">Открыть навигацию</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
         </div>
-        <div class="message" id="message_settings"></div>
-        <!--the main elements of the page-->
-        <div class="page_settings_layout">
-            <div class="form">
-                <div>
-                    Ваш пароль должен содержать символы верхнего и нижнего регистров, а так же цифры.
+        <div class="collapse navbar-collapse " id="responsive-menu">
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                    <li style="margin-right: 10px">
+                        <%--back to the main page--%>
+                            <button type="submit" class="btn btn-default btn-lg" onclick="history.back();"  >
+                                <i class="glyphicon glyphicon-arrow-left" ></i> назад
+                            </button>
+                    </li>
+                    <li>
+                        <form action="<c:url value="/j_spring_security_logout"/>">
+                            <button type="submit" class="btn btn-default btn-lg">
+                                <i class="glyphicon glyphicon-log-out"></i> Выход
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!--main element-->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-2 col-md-1 hidden-sm hidden-xs indent"></div>
+         <div class="col-lg-8 col-md-10 col-sm-12 col-xs-12" >
+            <div class="message" id="message_settings"></div>
+            <!--the main elements of the page-->
+            <div class="page_settings_layout">
+                <div class="form">
+                    <div>
+                    <p>Ваш пароль должен содержать символы верхнего и нижнего регистров, а так же цифры.</p>
                     <form id="passport_update">
                         <p class="text_field"><strong >Старый пароль*</strong></p>
                         <input type="text" name="old_password" id="old_password" placeholder="Введите старый парль" required pattern="((?=.*\d)(?=.*[a-zа-я])(?=.*[A-ZА-Я]).{6,20})" />
@@ -40,7 +73,7 @@
             </div>
             <!--for new name-->
             <div class="form">
-                Введите новое имя пользователя, длина имени от 2 до 20 символов.
+                <p>Введите новое имя пользователя, длина имени от 2 до 20 символов.</p>
                 <form id="name_update">
                  <p class="text_field"><strong>Новое имя пользователя</strong></p>
                     <input name="new_user_name" id="new_user_name" placeholder="Введите новое имя" required pattern="[A-ZА-Яa-zа-я]{2,20}" />
@@ -51,7 +84,7 @@
             </div>
             <!--set new surname-->
             <div class="form">
-                Введите новую фамилию пользователя, длина от 2 до 20 символов.
+                <p>Введите новую фамилию пользователя, длина от 2 до 20 символов.</p>
                 <form id="surname_update">
                     <p class="text_field"><strong>Новая фамилия пользователя</strong></p>
                     <input name="new_user_surname" id="new_user_surname" placeholder="Введите новую фамилию" required pattern="[A-ZА-Яa-zа-я]{2,20}" />
@@ -70,7 +103,7 @@
             </div>
             <!--set new email-->
             <div class="form">
-                Введите новый email
+                <p>Введите новый email</p>
                 <form id="email_update">
                     <p class="text_field"><strong>Новый email пользователя</strong></p>
                     <input name="new_user_email" id="new_user_email" placeholder="Введите новый email" required pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -93,9 +126,12 @@
             </div>
             <!--button go tu main page-->
             <div class="toMainPage">
-            <a href="<c:url value="/index"/>" class="button_to_main">Перейти на главную страницу</a>
+            <a href="<c:url value="/index"/>" type="button" class="btn btn-default">Перейти на главную страницу</a>
             </div>
         </div>
     </div>
+    <div class="col-lg-2 col-md-1 hidden-sm hidden-xs indent" ></div>
+</div>
+</div>
 </body>
 </html>

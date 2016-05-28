@@ -13,7 +13,7 @@
             <td>${user.surname}</td>
             <td>${user.aboutUser}</td>
             <td>
-                <button id='${user.id}' class="аdd-subscription">
+                <button id='${user.id}' class="аdd-subscription subscription-btn">
                     подписаться
                 </button>
             </td>

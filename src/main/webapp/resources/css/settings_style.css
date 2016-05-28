@@ -2,8 +2,7 @@
 div.page_settings_layout
 {
     position: relative;
-    height: 750px;
-    width: 800px;
+    height: 810px;
     margin: 10px auto 40px;
     overflow-y:scroll ;
 }
@@ -56,7 +55,11 @@ div.message{
     height:20px;
     color: #469327;
     margin-bottom: 10px;
-    margin-left:500px;
+    margin-left:5px;
     font-size: 25px;
+}
+
+div.indent{
+    height: 800px;
 }
 

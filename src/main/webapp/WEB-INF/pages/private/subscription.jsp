@@ -13,7 +13,8 @@
             <td>${user.surname}</td>
             <td>${user.aboutUser}</td>
             <td>
-                <button id='${user.id}' class="delete-subscription">
+                <%--by pressing the event runs through the class name. The ID of the button records the user ID--%>
+                <button id='${user.id}' class="delete-subscription subscription-btn">
                     удалить
                 </button>
             </td>

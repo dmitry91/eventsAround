@@ -3,16 +3,11 @@ div.main
 {
     min-width: 100%;
     min-height: 100%;
-    position: relative;
-    margin-top: -8px;
 }
 /*for out user photo*/
 div.user_photo
 {
-    width: 210px;
     height: 210px;
-    margin-top: 15px;
-    margin-left: 200px;
 }
 img.user_avatar{
     max-height: 210px;
@@ -25,16 +20,16 @@ img.user_avatar{
 /*General information about the user*/
 div.user_info
 {
-    position: absolute;
-    width: 200px;
     height: 200px;
-    margin-top: -200px;
-    margin-left: 500px;
 }
 /*user name and surname*/
 div.user_name_surname
 {
-    font-size: 20px;
+    font-size: 25px;
+}
+/*date user birthday*/
+div.user_birthday{
+    margin-top: 10px
 }
 /*information about user*/
 div.about_user
@@ -43,16 +38,16 @@ div.about_user
     margin-left: 5px;
     width: 200px;
     height: 200px;
-    font-size: 15px;
+    font-size: 17px;
 }
 /*unit which will display information about subscriptions, subscribers, reports, news and more*/
 div.output_element
 {
-    width: 85%;
-    height: 58%;
+    width: 700px;
+    height: 600px;
     margin-top: 20px ;
     margin-left: 10px ;
-    border: ridge #50b84c;
+    border: ridge #9d9d9d;
     overflow: auto;
     padding: 10px;
 }
@@ -64,7 +59,6 @@ div.footer
     font-size: 14px;
     bottom: 0;
     width: 100%;
-    height: 30px;
 }
 /*unit for the location of all the major elements*/
 div.page_layout
@@ -77,10 +71,6 @@ div.page_layout
 /*block button*/
 div.side_bar
 {
-    margin-top: 5px;
-    position: absolute;
-    left: 0;
-    width: 134px;
     height: 40px;
 }
 /*block button element 'lo'*/
@@ -92,18 +82,19 @@ div.side_bar ol
 }
 /*button itself*/
 a.button {
+    font-size: 15px;
     text-decoration: none;
     display: inline-block;
-    width: 150px;
-    height: 20px;
+    width: 170px;
+    height: 35px;
     color: rgba(255,255,255,1.8);
     cursor:pointer;
     border-radius: 8px;
     -webkit-user-select: none;
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 7px;
     padding: 5px;
-    background: #50b84c linear-gradient(#166414, #50b84c);
+    background: #333 linear-gradient(#777, #000);
     border-left: 2px solid rgb(150,150,150);
     border-right: 2px solid rgb(150,150,150);
     border-bottom: 2px solid rgb(230,230,230);
@@ -111,15 +102,19 @@ a.button {
 /*pressed button*/
 a.button:active {
     margin-left: 10px;
-    margin-top: 5px;
+    margin-top: 7px;
     padding: 5px;
     border-left: 2px solid rgb(150,150,150);
     border-right: 2px solid rgb(150,150,150);
     border-bottom: 2px solid rgb(230,230,230);
-    background: rgb(0, 79, 0) ;
+    background: rgb(3, 3, 3) ;
     box-shadow: none;
     -webkit-transform: translate(1px, -1px);
     transform: translate(1px, -1px);
+}
+a.button:hover {
+    color: #9fa1a1;
+    text-decoration: none;
 }
 /*page heading*/
 div.menu_header
@@ -186,4 +181,9 @@ div.menu_header .settings{
 }
 div.menu_header  img.wheel{
     width: 100%;
+}
+
+/*button delete*/
+button.subscription-btn{
+    font-size: 15px;
 }
