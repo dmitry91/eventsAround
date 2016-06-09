@@ -5,6 +5,7 @@ import com.dmitry.eventsaround.db.dao.UserDAO;
 import com.dmitry.eventsaround.db.entities.Message;
 import com.dmitry.eventsaround.db.entities.User;
 import com.dmitry.eventsaround.services.validation.Validator;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -39,6 +40,9 @@ public class MessageController {
     @Qualifier(value="userDAO")
     UserDAO userDAO;
 
+    //Initialize logger
+    private static final Logger log = Logger.getLogger(MessageController.class);
+
     /**
      * get all messages in DB
      * @return Json array messages
@@ -68,8 +72,10 @@ public class MessageController {
         try {
             mainObj.put("Messages", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("return all messages in the application");
         return mainObj.toString();
     }
 
@@ -90,8 +96,10 @@ public class MessageController {
                 jo.put("theme", message.getTheme());
                 jo.put("user_id", message.getUser().getId());
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
+        log.info("return message by id-"+id);
         return jo.toString();
     }
 
@@ -110,6 +118,7 @@ public class MessageController {
         ArrayList<Message> messages= (ArrayList<Message>) messageDAO.findByUserId(currentUser.getId());
         //add find messages
         modelMap.addAttribute("userMessages",messages);
+        log.info("return all posts by user id-"+currentUser.getId());
         return "pages/private/messages";
     }
 
@@ -135,6 +144,7 @@ public class MessageController {
                 jo.put("user_id", message.getUser().getId());
                 ja.put(jo);
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -143,8 +153,10 @@ public class MessageController {
         try {
             mainObj.put("Messages", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("return message on the theme- "+theme);
         return mainObj.toString();
     }
 
@@ -170,6 +182,7 @@ public class MessageController {
                 jo.put("user_id", message.getUser().getId());
                 ja.put(jo);
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -178,8 +191,10 @@ public class MessageController {
         try {
             mainObj.put("Messages", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("return message on the text- "+text);
         return mainObj.toString();
     }
 
@@ -202,8 +217,10 @@ public class MessageController {
             */
             validator.validMessage(message);
             messageDAO.save(message);
+            log.info("user id-" +currentUser.getId()+" send new message" +message);
             return "successful";
         } catch (ValidationException e) {
+            log.error(e);
             e.printStackTrace();
             return e.getMessage();
         }
@@ -218,9 +235,15 @@ public class MessageController {
     @RequestMapping(value = "/delete", method = RequestMethod.GET)
     public @ResponseBody String deleteUser(@RequestParam long id){
          messageDAO.delete(id);
+         log.info("delete message id-"+id);
          return "successful";
     }
 
+    /**
+     * We get to where we are messages from users signed
+     * @param modelMap message
+     * @return message page
+     */
     @RequestMapping(value="messagesubscription", method = RequestMethod.GET )
     public String getMessageUserSubscription(ModelMap modelMap){
         //find a user spring security object that is currently logged in
@@ -244,6 +267,7 @@ public class MessageController {
         }
         Collections.sort(messages);
         modelMap.addAttribute("messageSubscriber",messages);
+        log.info("We get to where we are messages from users signed");
         return "pages/private/newsMessages";
     }
 }

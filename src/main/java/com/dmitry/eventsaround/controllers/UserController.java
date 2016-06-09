@@ -6,6 +6,7 @@ import com.dmitry.eventsaround.db.entities.Role;
 import com.dmitry.eventsaround.db.entities.User;
 import com.dmitry.eventsaround.services.validation.Validator;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +59,9 @@ public class UserController {
     @Autowired
     Validator validator;
 
+    //Initialize logger
+    private static final Logger log = Logger.getLogger(UserController.class);
+
     /**
      * find all users in database
      * the object is assembled by hand,
@@ -85,6 +89,7 @@ public class UserController {
         //remove those who signed on
         allUsers.removeAll(usersSubscription);
         modelMap.addAttribute("allUsers",allUsers);
+        log.info("return all users");
         return "pages/private/users";
     }
 
@@ -107,8 +112,10 @@ public class UserController {
                 jo.put("aboutUser", user.getAboutUser());
                 jo.put("photo", user.getAvatar());
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
+        log.info("return user id-" +id);
        return jo.toString();
     }
 
@@ -127,6 +134,7 @@ public class UserController {
         Set<User> users=currentUser.getFollowers();
         //add set to map
         modelMap.addAttribute("users",users);
+        log.info("return followers user id-"+currentUser.getId());
         return "pages/private/followers";
 
     }
@@ -149,6 +157,7 @@ public class UserController {
         for (BigInteger aIdList : IdList)
             users.add(userDAO.findById(aIdList.longValue()));
         modelMap.addAttribute("users",users);
+        log.info("return subscription user id-" +currentUser.getId());
         return "pages/private/subscription";
 
     }
@@ -167,6 +176,7 @@ public class UserController {
         User whomSigned = userDAO.findById(id);
         whomSigned.getFollowers().remove(currentUser);
         userDAO.save(whomSigned);
+        log.info("delete subscription user id-" + currentUser.getId() + " subscription id-" + whomSigned.getId());
         return "successful";
     }
 
@@ -185,6 +195,7 @@ public class UserController {
         User newSubscription = userDAO.findById(id);
         newSubscription.getFollowers().add(currentUser);
         userDAO.save(newSubscription);
+        log.info("add subscription, current user id-"+currentUser.getId() + "subscription id-" +newSubscription.getId());
         return "successful";
     }
 
@@ -211,6 +222,7 @@ public class UserController {
                 jo.put("photo", user.getAvatar());
                 ja.put(jo);
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -219,8 +231,10 @@ public class UserController {
         try {
             mainObj.put("Users", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("find user by user name-"+name+" and surname-"+surname);
         return mainObj.toString();
     }
 
@@ -246,6 +260,7 @@ public class UserController {
                 jo.put("photo", user.getAvatar());
                 ja.put(jo);
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -254,8 +269,10 @@ public class UserController {
         try {
             mainObj.put("Users", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("find user by user name-"+name);
         return mainObj.toString();
     }
 
@@ -281,6 +298,7 @@ public class UserController {
                 jo.put("photo", user.getAvatar());
                 ja.put(jo);
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -289,8 +307,10 @@ public class UserController {
         try {
             mainObj.put("Users", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("find user by user surname-" +surname);
         return mainObj.toString();
     }
 
@@ -319,8 +339,10 @@ public class UserController {
             userDAO.save(user);
             //save role user
             roleDAO.save(roleUser);
+            log.info("add new user to databases" +user.getLogin());
             return "successful";
         } catch (ValidationException e) {
+            log.error(e);
             e.printStackTrace();
             return e.getMessage();
         }
@@ -340,6 +362,7 @@ public class UserController {
         roleDAO.save(roleUser);
         //delete user from database
         userDAO.delete(id);
+        log.info("delete user id-"+id);
     }
 
     /**
@@ -368,8 +391,10 @@ public class UserController {
             currentUser.setAvatar(user.getAvatar());
             //save update user in DB
             userDAO.save(currentUser);
+            log.info("update user id-"+id);
             return "successful";
         } catch (ValidationException e) {
+            log.error(e);
             e.printStackTrace();
             return e.getMessage();
         }
@@ -397,6 +422,7 @@ public class UserController {
                 jo.put("photo", user.getAvatar());
                 ja.put(jo);
             } catch (JSONException e) {
+                log.error(e);
                 e.printStackTrace();
             }
         }
@@ -405,8 +431,10 @@ public class UserController {
         try {
             mainObj.put("Users", ja);
         } catch (JSONException e) {
+            log.error(e);
             e.printStackTrace();
         }
+        log.info("Users find the parameter 'about user'-"+about);
         return mainObj.toString();
     }
 
@@ -416,6 +444,7 @@ public class UserController {
      */
     @RequestMapping(value = "/settings", method = RequestMethod.GET)
     public String settings(){
+        log.info("get page user settings");
         return "pages/private/settings";
     }
 
@@ -438,8 +467,10 @@ public class UserController {
                 byte[] bytes = file.getBytes();
                 currentUser.setAvatar(bytes);
                 userDAO.save(currentUser);
+                log.info("set/update user avatar user id-"+currentUser.getId());
                 return "You successfully uploaded file=" ;
             } catch (Exception e) {
+                log.error(e);
                 return "You failed to upload  => " + e.getMessage();
             }
         } else {
@@ -469,8 +500,10 @@ public class UserController {
                     //load default image
                     array = Files.readAllBytes(Paths.get(getClass().getResource("/image/no_photo.jpg").toURI()));
                 } catch (URISyntaxException e) {
+                    log.error(e);
                     e.printStackTrace();
                 }
+                log.info("get avatar current user id-" +currentUser.getId());
                 return array;
         }
     }
@@ -495,9 +528,11 @@ public class UserController {
         if(currentUser.getPassword().equals(oldPassword)&& validator.validUserPassword(newPassword) && newPassword.equals(repeatNewPassword)) {
             currentUser.setPassword(newPassword);
             userDAO.save(currentUser);
+            log.info("update user password, user id-"+currentUser.getId()+" password-" +newPassword);
             return new ResponseEntity<String>(SAVE, HttpStatus.OK);
         }
         else {
+            log.warn("update user password, user id-" + currentUser.getId());
             return new ResponseEntity<String>(ERROR_PASSWORD, HttpStatus.OK);
         }
     }
@@ -518,9 +553,11 @@ public class UserController {
         if(validator.validUserNameSurname(newName)) {
             currentUser.setName(newName);
             userDAO.save(currentUser);
+            log.info("update user name, user id-"+currentUser.getId()+" name-" +newName);
             return new ResponseEntity<String>(SAVE, HttpStatus.OK);
         }
         else {
+            log.warn("update user name, user id-" + currentUser.getId());
             return new ResponseEntity<String>(ERROR_NAME, HttpStatus.OK);
 
         }
@@ -542,9 +579,11 @@ public class UserController {
         if(validator.validUserNameSurname(newSurname)) {
             currentUser.setSurname(newSurname);
             userDAO.save(currentUser);
+            log.info("update user surname, user id-"+currentUser.getId()+" surname-" +newSurname);
             return new ResponseEntity<String>(SAVE, HttpStatus.OK);
         }
         else {
+            log.warn("update user surname, user id-" + currentUser.getId() + " surname-" + newSurname);
             return new ResponseEntity<String>(ERROR_SURNAME, HttpStatus.OK);
 
         }
@@ -566,9 +605,11 @@ public class UserController {
         if(validator.validUserEmail(newEmail)) {
             currentUser.setLogin(newEmail);
             userDAO.save(currentUser);
+            log.info("update user email, user id-"+currentUser.getId()+" email-" +newEmail);
             return new ResponseEntity<String>(SAVE, HttpStatus.OK);
         }
         else {
+            log.warn("update user email, user id-" + currentUser.getId());
             return new ResponseEntity<String>(ERROR_EMAIL, HttpStatus.OK);
 
         }
@@ -590,9 +631,11 @@ public class UserController {
         if(validator.validAboutUser(newAbout)) {
             currentUser.setAboutUser(newAbout);
             userDAO.save(currentUser);
+            log.info("update about user id-"+currentUser.getId()+" about user-" +newAbout);
             return new ResponseEntity<String>(SAVE, HttpStatus.OK);
         }
         else {
+            log.warn("update about user id-"+currentUser.getId());
             return new ResponseEntity<String>(ERROR_DATA, HttpStatus.OK);
 
         }

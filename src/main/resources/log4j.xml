@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="true" xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+    <!--Description of logging options in the File-->
+    <appender name="file" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="${catalina.base}/logs/events around/program_log.log"/> <!--file for log-->
+        <param name="Append" value="true"/> <!-- append the old file - set true -->
+        <param name="MaxFileSize" value="10MB"/><!-- - max file size -->
+        <param name="MaxBackupIndex" value="5"/> <!--max number of files-->
+        <param name="Encoding" value="Cp1251"/>
+        <param name="threshold" value="debug"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- file for error message-->
+    <appender name="error-log" class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="${catalina.base}/logs/events around/error.log"/> <!--file for log-->
+        <param name="Append" value="true"/> <!-- append the old file - set true -->
+        <param name="MaxFileSize" value="10MB"/><!-- - max file size -->
+        <param name="MaxBackupIndex" value="5"/> <!--max number of files-->
+        <param name="Encoding" value="Cp1251"/>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="warn" />
+            <param name="LevelMax" value="fatal" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n"/>
+        </layout>
+    </appender>
+
+    <!-- Description of the cache settings on the console -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Encoding" value="Cp1251"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                   value="%d{HH:mm:ss.SS} [%p] [%c] - %m%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <priority value="info"/>
+        <appender-ref ref="console"/> <!-- console log -->
+        <appender-ref ref="file"/> <!-- log on file -->
+        <appender-ref ref="error-log"/> <!-- log warn/error on file -->
+    </root>
+</log4j:configuration>

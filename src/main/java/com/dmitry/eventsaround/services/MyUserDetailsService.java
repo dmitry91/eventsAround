@@ -2,6 +2,7 @@ package com.dmitry.eventsaround.services;
 
 import com.dmitry.eventsaround.db.dao.UserDAO;
 import com.dmitry.eventsaround.db.entities.Role;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,6 +27,9 @@ public class MyUserDetailsService implements UserDetailsService {
 	@Qualifier(value="userDAO")
 	private UserDAO userDAO;
 
+	//Initialize logger
+	private static final Logger log = Logger.getLogger(MyUserDetailsService.class);
+
 	//find user by login, and build authorities
 	@Override
 	public UserDetails loadUserByUsername(final String userLogin) throws UsernameNotFoundException {
@@ -35,6 +39,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	}
 	//return found the user to verify the authorization
 	private User buildUserForAuthentication(com.dmitry.eventsaround.db.entities.User user, List<GrantedAuthority> authorities) {
+		log.info("return user id-"+user.getId()+"for authorization");
 		return new User(user.getLogin(), user.getPassword(), true, true, true, true, authorities);
 	}
 

@@ -4,6 +4,7 @@ import com.dmitry.eventsaround.db.dao.RoleDAO;
 import com.dmitry.eventsaround.db.dao.UserDAO;
 import com.dmitry.eventsaround.db.entities.User;
 import com.dmitry.eventsaround.services.validation.Validator;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +26,9 @@ import java.util.Date;
  */
 @Controller
 public class LoginController {
+
+    //Initialize logger
+    private static final Logger log = Logger.getLogger(LoginController.class);
 
     //message result statement
     private final String ERROR_MESSAGE = "Неправильные имя/пароль";
@@ -57,11 +61,13 @@ public class LoginController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String home() {
+        log.info("return home page");
         return "redirect:/index";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
+        log.info("return login page");
         return "pages/login";
     }
 
@@ -72,6 +78,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
     public String loginerror(ModelMap model) {
+        log.warn("error login");
         model.addAttribute("error", ERROR_MESSAGE);
         return "pages/login";
     }
@@ -82,11 +89,13 @@ public class LoginController {
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout() {
+        log.info("return login page after exit");
         return "pages/login";
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registrationPage() {
+        log.info("return page registration user");
         return "pages/registration";
     }
 
@@ -110,27 +119,36 @@ public class LoginController {
         try {
             dateBirthday = df.parse(birthday);
         } catch (ParseException e) {
+            log.error(e);
             e.printStackTrace();
         }
-        if(!validator.validUserNameSurname(name))
-            return ERROR_NAME;
-        else if(!validator.validUserNameSurname(surname))
-            return ERROR_SURNAME;
-        else if(!validator.validUserEmail(email))
-            return ERROR_EMAIL;
-        else if(!validator.validUserPassword(password))
-            return ERROR_PASSWORD;
-        else if(!validator.validAboutUser(aboutUser))
-            return ERROR_ABOUT_USER;
-        else if(!validator.validUserBirthday(dateBirthday))
-            return ERROR_BIRTHDAY;
+        if(!validator.validUserNameSurname(name)){
+            log.warn("registration ERROR NAME");
+            return ERROR_NAME;}
+        else if(!validator.validUserNameSurname(surname)){
+            log.warn("registration ERROR SURNAME");
+            return ERROR_SURNAME;}
+        else if(!validator.validUserEmail(email)){
+            log.warn("registration ERROR EMAIL");
+            return ERROR_EMAIL;}
+        else if(!validator.validUserPassword(password)){
+            log.warn("registration ERROR PASSWORD");
+            return ERROR_PASSWORD;}
+        else if(!validator.validAboutUser(aboutUser)){
+            log.warn("registration  ERROR DATA ABOUT USER");
+            return ERROR_ABOUT_USER;}
+        else if(!validator.validUserBirthday(dateBirthday)){
+            log.warn("registration ERROR BIRTHDAY DATE");
+            return ERROR_BIRTHDAY;}
         else{
             user = new User(name,surname,dateBirthday,aboutUser,email,password,roleDAO.findByRole("ROLE_USER"),null);
             try {
                 validator.validUser(user);
             } catch (ValidationException e) {
+                log.error(e);
                 e.printStackTrace();
             }
+            log.info("Create new user"+user);
             userDAO.save(user);
             return USER_SAVE;
         }
@@ -152,7 +170,7 @@ public class LoginController {
         modelMap.addAttribute("user_name_sername",currentUser.getName()+" "+currentUser.getSurname());
         modelMap.addAttribute("user_birthday",new SimpleDateFormat("dd-MM-yyyy").format(currentUser.getBirthday()));
         modelMap.addAttribute("user_about",currentUser.getAboutUser());
-
+        log.info("return index page for user id-"+currentUser.getId());
         return "pages/private/index";
     }
 
