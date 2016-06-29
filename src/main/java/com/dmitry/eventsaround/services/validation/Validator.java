@@ -21,9 +21,10 @@ import java.util.regex.Pattern;
 @Service
 public class Validator {
 
+    // for operations to the user table in the database
     @Qualifier("userDAO")
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     /**
      * if the object has passed validation, do not do anything,
@@ -103,6 +104,7 @@ public class Validator {
     /**
      * check the validity of an email
      * If the login is not available to existing user returns false
+     * if 'userDAO.findByLogin(s)' return object,then email busy
      * @param s user email
      * @return boolean result
      */
@@ -162,4 +164,19 @@ public class Validator {
         return birthday.getTime() > maxAge.getTime() && birthday.getTime() < minAge.getTime();
     }
 
+    /**
+     * set user data access object
+     * @param userDAO dao object
+     */
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    /**
+     * get user data access object
+     * @return UserDAO
+     */
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
 }
